@@ -1,0 +1,65 @@
+1. Write a program to implement
+(a) Recursive Descent Parsing with back tracking (Brute Force Method). S→ cAd , A →ab /a
+(b) Recursive Descent Parsing with back tracking (Brute Force Method). S→ cAd , A → a / ab
+
+ Program 
+#include<stdio.h>
+#include<conio.h>
+#include<string.h>
+int A();
+char str[15];
+int isave,curr_ptr=0;
+int main(void)
+{
+//clrscr();
+printf("1.S->cAd\n2.A->ab/a\n");
+printf("this is parser for the above grammar:\n");
+printf("Enter any string:");
+scanf("%s",str);
+while(curr_ptr<strlen(str))
+{
+//S has only one immediate derivation which is cAd
+//match with c
+if (str[curr_ptr]=='c')
+{
+curr_ptr++;
+//call function to match A
+if (A()) //checking the productions of A->ab/a
+{
+curr_ptr++;
+//match d
+if (str[curr_ptr]=='d' && str[curr_ptr+1]=='\0')
+{
+//success
+printf("string is accepted by the grammar");
+getch();
+return 1;
+}
+else break;
+}
+else break;
+}
+else break;
+}
+//incase any of them fail to match return negatively.
+printf("string is not accepted by the grammar");
+//getch();
+return 0;
+}
+int A() //sub function A()
+{
+isave=curr_ptr;
+
+if (str[curr_ptr]=='a')
+{
+curr_ptr++;
+if(str[curr_ptr]=='b')
+return 1;
+}
+curr_ptr=isave; //return to start
+//check if a is matched and return accordingly.
+if(str[curr_ptr]=='a')
+return 1;
+else
+return 0;
+}
